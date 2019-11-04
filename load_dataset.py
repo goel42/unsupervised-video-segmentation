@@ -16,12 +16,13 @@ def load_dataset(name, path):
 #doubt: why subtract 1 for g_K? 
     g_K = len(data['labelC'][0])  -1 
     
-#     print("Dataset Loaded Successfully")
+    print("Dataset Loaded Successfully")
  
     return vid_features, gt_labels, vid_frames_count, g_K
 
 #test
 # blah = ["cereals", "coffee", "friedegg", "juice", "milk", "pancake", "salat", "sandwich", "scrambledegg", "tea"]
+# path = r"/mnt/c/Users/dcsang/Documents/code_translate/DATA/breakfast_actions/formatted_data_new/"
 # for item in blah:
 #     _,_,_,_ = load_dataset(item, path)
 
