@@ -2,6 +2,18 @@ import hdf5storage
 import numpy as np
 import os
 
+"""
+size of data structures:
+
+vid_ features is num_videos * num_frames * dimensionality of features
+gt_labels is num_videos * num_frames
+vid_frames_count is num_videos
+"""
+
+
+#TODO
+# change vid_features to vid_frames_features
+
 def load_dataset(name, path):
     path = os.path.join(path, name+".mat")
     data = hdf5storage.loadmat(path)

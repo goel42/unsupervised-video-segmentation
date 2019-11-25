@@ -46,8 +46,8 @@ def initialize_subactivity_assignments(vids_frames_count, subactivity_count, rho
             samples[tail-1]['z'][i][j] = np.uint32(pi[activity_counts[0][j]-1])
 
             #INCOMPLETE
-            #test the dimensions and indexing of all these data structures
-            #compare outputs from matlab code and python code
+            #test the dimensions and indexing of all these data structures.done
+            #compare outputs from matlab code and python code.done
             #implement and verify vToPi function. done.
     print("Vid over")
     return samples
