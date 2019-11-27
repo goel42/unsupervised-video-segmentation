@@ -15,12 +15,20 @@ embedding:
     validation_percentage: 0
     #TODO: look at line 49 original matlab code: driversetparams_breakfast()...
     train:
-        max_epochs: 
-        word_dim: 
-        semantic_space: 50
-        img_dim:
-        gmargin: #DOUBT: not present in bf_iter_coffee declarations, whre is this declared in matlab code. is this config file the right place to declare it?
+        actFunc: 'rectMax' #TODO generalise by implementing setup_activation_fn and get_param
+        batch_size: 300
+        max_epochs: 1
+        label_vec_dim: 200 
+        latent_space_dim: 50
+        frame_features_dim: 64
+        gmargin: 100 #DOUBT: not present in bf_iter_coffee declarations, whre is this declared in matlab code. is this config file the right place to declare it?
+        thrglobalscore: 0 #TODO: belonged to dataset, atm hard-coded change
+        smoothnum: 0 #TODO: belonged to dataset, atm hard-coded change
+        reg_const_gamma: 2e-10 #TODO: belonged to dataset, atm hard-coded change
+        lr: 1e-7
+        momentum: 0.9
         dataset: " " #TODO why is it instructions in original code?
+        
         featureE:
             neg_response: 0
             word_count_DCM: 1

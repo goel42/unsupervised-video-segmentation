@@ -9,5 +9,7 @@ def fs_subpart_embedding_theta_given(path2embeddingdata, embedding_labels, frame
         #TODO: code for saving
     else:
         #TODO: code for retrieving previously saved W and labels_vecs
-    
-    return W, labels_vecs
+
+        #TODO: for now omitting labels_vecs;finalising embedding portion
+#     return W, labels_vecs
+    return W

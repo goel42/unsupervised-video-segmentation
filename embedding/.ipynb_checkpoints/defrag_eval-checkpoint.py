@@ -3,7 +3,7 @@ def forward_sent(subact, W_a):
     Z = np.zeros(params.embedding.train.semantic_space, 1) #TODO why not +1 here?
     v_cat = np.zeros(params.embedding.train.word_dim, 1) #TODO why not +1 here, bias thingy?
     
-    for i in range(N):
+#     for i in range(N):
         #TODO
         #MAJOR #DOUBT the original matlab code implies that we are adding label vector to itself N times?
         #MAJOR #DOUBT since N is length of label string which is usually 1 (single digit labels) why this for loop when it will exec only once?
@@ -28,7 +28,7 @@ def defrag_eval(split, W):
     subacts = #TODO split.textfeat
     
     #direct matrix multiplication yields us the same result in one go for entire batch without needing a for loop
-    frames_latent_space = W_f * frames_batch.T
+    frames_latent_space = np.dot(W_f , frames_batch.T)
     
     #
     M = np.zeros(subacts_count, frames_count)
