@@ -33,6 +33,7 @@ def initialize_subactivity_assignments(vids_frames_count, subactivity_count, rho
     for i in range(vids_count):
         #uniform distribution within [low, high)
         #TODO:  also try np.floor so that python's 0-based indexing is followed automatically
+        #DOUBT: an activity coud be labelled as 0 and ceil would also be 0. VERY UNLIKELY CHNACE but possible. correct it
         activity_counts = np.sort(np.ceil(np.random.uniform(0, subactivity_count, (1, vids_frames_count[i])))).astype(np.uint32)
 #         print(activity_counts[0])
         pi = v_to_pi(samples[tail-1]['v'][:, i])
