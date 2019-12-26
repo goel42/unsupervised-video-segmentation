@@ -1,6 +1,6 @@
 import yaml
 
-with open("utils/config.yaml", "r") as stream:
+with open("C:/Users/dcsang/PycharmProjects/unsupervised-video-segmentation/utils/config.yaml", "r") as stream:
 	try:
 		params = yaml.safe_load(stream)
 	except yaml.YAMLError as exc:

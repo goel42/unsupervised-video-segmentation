@@ -9,7 +9,7 @@ from embedding.defrag_cost import defrag_cost
 # from embedding.defrag_eval import defrag_eval
 import math
 
-def defrag_run(path2data, W):
+def defrag_run(path2data, train, vald, W):
 
     Wa = W["Wa"]
     Wf = W["Wf"]
@@ -23,10 +23,13 @@ def defrag_run(path2data, W):
     #TODO: setup_activation_fn not required because BackwardSents() function not used in original code. skipping it
 #     params = setup_activation_fn(params)
     
-    print("getting training fold...\n")
-    train_split = get_dataset_fold('train', path2data)
-    print("getting validation fold...\n")
-    vald_split = get_dataset_fold("val", path2data)
+    #print("getting training fold...\n")
+    #train_split = get_dataset_fold('train', path2data)
+    #print("getting validation fold...\n")
+    #vald_split = get_dataset_fold("val", path2data)
+    
+    train_split = train
+    vald_split = vald
     Ni = train_split["frames"].shape[0] #TODO: verify
     
     max_iters = np.ceil(Ni/__batch_size) * __max_epochs
@@ -67,6 +70,8 @@ def defrag_run(path2data, W):
         batch_indices = np.resize(batch_indices, new_size)
     batch_indices = batch_indices.reshape(-1, __batch_size)
     
+    #MAJOR TODO: remove max_iters ie for debug purpose
+    max_iters = 3
     for itr in range(np.int(max_iters)):
         curr_batch_indices = batch_indices[itr]
         frames_batch = train_split["frames"][curr_batch_indices]
@@ -112,7 +117,7 @@ def defrag_run(path2data, W):
         #eval validation performance every now and then, or on final iteration
         if ( ((itr+1)%pp ==0 and (itr+1) < 0.99*max_iters) or (itr+1 == max_iters) ):
             
-            if  vald_split["frames"]:
+            if  len(vald_split["frames"]) > 0:
                 #eval and record validation set performance
                 e2r,e3r = defrag_eval(vald_split, W)
             else :
@@ -192,9 +197,14 @@ def defrag_run(path2data, W):
                 report.update({
                     "W": W_best
                 })
-    if W_best:
-        W_best = {"Wa": Wa,"Wf": Wf}
     
+    #TODO following looks wrong. check with original code
+    #if W_best:
+        #W_best = {"Wa": Wa,"Wf": Wf}
+    #return W_best
+    
+    
+    W_best = {"Wa": Wa,"Wf": Wf}
     return W_best
                 
                 
