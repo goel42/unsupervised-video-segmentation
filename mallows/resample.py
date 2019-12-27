@@ -12,7 +12,7 @@ def resample_z(vid_idx, vids_frames_subacts_label, frames_subacts_order, vids_fr
     frames_mixgauss = vids_frames_mixgauss[vid_idx]
 	frames_count = vids_frames_count[vid_idx]
     
-    #TODO: setglobalordering wali shit here..
+    #TODO: setglobalordering wali bkc here..
     
     for i in range(frames_count):
         curr_frame_idx = round(order[i])
@@ -33,16 +33,17 @@ def resample_z(vid_idx, vids_frames_subacts_label, frames_subacts_order, vids_fr
             
             subacts_prob[sa-1] = np.log((float(ntau[sa-1]) + ntau_0)/(float(ntaus) + (ntau_0 * float(subacts_count)))) - result       
         
-        subact_curr = sample_normalised() #TODO
-        vids_frames_label[vid_idx][curr_frame_idx] = subact_curr
+        #+1 in subacts_curr because 1-indexed
+        subact_curr = sample_normalised(subacts_prob, subacts_count) + 1 #TODO see comment in sample_normalised line 6 (rand)
+        vids_frames_subacts_label[vid_idx][curr_frame_idx] = subact_curr
         
         ntau[subact_curr-1] += 1
         ntaus +=1
         
-    return vids_frames_label, ntau, ntaus
+    return vids_frames_subacts_label, ntau, ntaus
 
 #TODO: the subactivities are semantically in range [1,K] but when used as index -1 needs to be done. thoroughly check.
-def resample_v(rho):
+def resample_v(/*TODO*/ , rho):
     order = np.ramdom.permutation(subacts_count-1) #randomly gen seq in which we process each element of inversion_count
 
     #getting X_mixgauss for current video vid_idx
@@ -65,14 +66,15 @@ def resample_v(rho):
                 result = result + frames_mixgauss[ proposed_subacts[f]-1, f]
             curr_v_prob[k] = -result - (rho[v_idx]*float(k)) 
             
-         curr_v = sample_normalised(curr_v_prob, subacts_count - v_idx, /*todo*/ )
+         curr_v = sample_normalised(curr_v_prob, subacts_count - v_idx)
          vids_frames_invcount[v_idx, vid_idx] = curr_v
          porposed_v[v_idx] = curr_v
          nvs[v_idx] += curr_v
 
-    return g_nvs, g_v , g_rho #TODO fill in more returnables
+    return g_nvs, g_v , g_rho #TODO any returnable whose value is changed and not added here?
     #g_nvs is used in sample_rho, 
-    
+
+#TODO   
 def resample_rho():
 
 	rho_Array = []

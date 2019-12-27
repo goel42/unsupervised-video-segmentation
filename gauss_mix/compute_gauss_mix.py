@@ -7,9 +7,14 @@ from sklearn.cluster import KMeans
 from scipy.stats import multivariate_normal
 
 import numpy as np
+#TODO: value checking. pix_D in original code had 'inf' values when i was value checking. here in python i didnot come across any inf values. fishy?
+#TODO: dim checking. done. looks fiine but checking by comparing values with matlab code TBD
+
+
 #TODO: variable name:: whereever label is used specificy whether gauss_label or seg_label
 
 def fit_gaussmix(X_probs_seg_label, gauss_labels):
+    #TODO: following should instead be done by passing gauss_count as a paramter 
     unique_gauss_labels = np.unique(gauss_labels)
     gauss_count = len(unique_gauss_labels)
     
@@ -20,7 +25,7 @@ def fit_gaussmix(X_probs_seg_label, gauss_labels):
         X_probs_seg_label_gauss_label = X_probs_seg_label[gauss_labels==curr_gauss_label, :]    #shape should be __ X subact_count
         
         pi = X_probs_seg_label_gauss_label.shape[0]/X_probs_seg_label.shape[0]
-        mu = np.mean (X_probs_seg_label_gauss_label, axis =0) # size of this array should be "subact_count" 
+        mu = np.mean (X_probs_seg_label_gauss_label, axis =0) # TODO: size of this array should be "subact_count" 
         sigma = np.cov(X_probs_seg_label_gauss_label.T) + (0.0001 * np.eye(X_probs_seg_label.shape[1]))#should be subact_count x subact_count
         gauss_mixtures.append([pi,mu,sigma]) #TODO: verify dimension 
    
@@ -28,6 +33,7 @@ def fit_gaussmix(X_probs_seg_label, gauss_labels):
 
 #gaussmixture_subact contains gauss_count(3) num of mixtures for 1 subact (not subacts)
 #X_probs_seg_label contains X_probs for 1 subactivity
+    #rgb_pts == X_probs_seg_label
 def assign_gauss_single(X_probs_seg_label, gaussmixture_subact):
     gauss_count = len(gaussmixture_subact)
     #pix_D = np.zeros(np.sum(indices_curre_seg_label), gauss_count) #TODO basically, number of X-probs for a given seg_label X gauss_count
