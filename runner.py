@@ -6,6 +6,7 @@ from embedding.optimise_embedding_weights import optimise_embedding_weights
 from embedding.feature_extraction import extract_features
 from gauss_mix.compute_gauss_mix import compute_gauss_mix
 from utils.load_word_vectors import get_label_word2vec
+from mallows.sample_model import mallows
 
 #from embedding.optimise_embedding_weights import optimise_embedding_weights
 
@@ -39,14 +40,23 @@ W = optimise_embedding_weights(path2embeddingdata_folder, vids_frames_features,
 ###FEATURE EXTRACTION
 X_probs = extract_features(labels_features, vids_frames_features, W)
 
-print("#########################################bro")
+
 ###GAUSSIAN MIXTURE PART
 X_probs_gauss_mix = compute_gauss_mix(samples[0]["z"], vids_frames_count, X_probs, subacts_count)
 
 ###INFERENCE AND MALLOWS MODEL
-#sample_model()
+print("#########################################started mallows")
+vids_count = len(vids_frames_count)
+#TODO: take following from params
+iterations = 1
+rho_prior = 1
+tau_prior = 0.1
 
 
+
+samples = mallows(samples,X_probs_gauss_mix, subacts_count, vids_count, vids_frames_count, tau_prior, rho_prior, iterations)
+
+#TODO: iterations fix 
 
 
 

@@ -6,5 +6,5 @@ save_non_project_files = False
 
 [main]
 version = 0.2.0
-recent_files = []
+recent_files = ['mallows\\utility_mallows.py', 'mallows\\resample.py', 'mallows\\sample_model.py', 'runner.py', 'gauss_mix\\compute_gauss_mix.py', 'embedding\\feature_extraction.py', 'utils\\vToPi.py', 'initialize_subactivity_assignments.py']
 
